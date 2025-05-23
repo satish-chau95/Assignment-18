@@ -28,7 +28,7 @@ const Dashboard = () => {
   // Force re-fetch tasks when component mounts or user changes
   useEffect(() => {
     if (user) {
-      console.log("Dashboard mounted, fetching tasks for user:", user._id)
+      // console.log("Dashboard mounted, fetching tasks for user:", user._id)
       dispatch(getTasks(filters))
 
       if (user.role === "admin") {
@@ -40,7 +40,7 @@ const Dashboard = () => {
   // Handle filter changes
   useEffect(() => {
     if (user) {
-      console.log("Filters changed, refetching tasks:", filters)
+      // console.log("Filters changed, refetching tasks:", filters)
       dispatch(getTasks(filters))
     }
   }, [filters, dispatch, user])
@@ -64,17 +64,17 @@ const Dashboard = () => {
   const handleCreateTask = async (taskData) => {
     setIsSubmitting(true)
     try {
-      console.log("Creating task with data:", taskData)
+      // console.log("Creating task with data:", taskData)
       const result = await dispatch(createTask(taskData)).unwrap()
-      console.log("Task created successfully:", result)
+      // console.log("Task created successfully:", result)
       toast.success("Task created successfully!")
       setShowTaskForm(false)
 
       // Immediately refresh the tasks list to ensure the new task appears
       await dispatch(getTasks({})).unwrap()
-      console.log("Tasks refreshed after creation")
+      // console.log("Tasks refreshed after creation")
     } catch (error) {
-      console.error("Error creating task:", error)
+      // console.error("Error creating task:", error)
       toast.error(typeof error === "string" ? error : "Failed to create task. Please try again.")
     } finally {
       setIsSubmitting(false)
@@ -83,7 +83,7 @@ const Dashboard = () => {
 
   const refreshTasks = async () => {
     try {
-      console.log("Manually refreshing tasks...")
+      // console.log("Manually refreshing tasks...")
       await dispatch(getTasks({})).unwrap()
       toast.success("Tasks refreshed successfully!")
     } catch (error) {
@@ -93,9 +93,9 @@ const Dashboard = () => {
   }
 
   // Debug logging
-  console.log("Dashboard render - Tasks:", tasks)
-  console.log("Dashboard render - Tasks length:", Array.isArray(tasks) ? tasks.length : "Not an array")
-  console.log("Dashboard render - Is loading:", isLoading)
+  // console.log("Dashboard render - Tasks:", tasks)
+  // console.log("Dashboard render - Tasks length:", Array.isArray(tasks) ? tasks.length : "Not an array")
+  // console.log("Dashboard render - Is loading:", isLoading)
 
   if (isLoading && (!tasks || tasks.length === 0)) {
     return <Spinner />

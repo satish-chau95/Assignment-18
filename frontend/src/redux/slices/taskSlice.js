@@ -41,9 +41,9 @@ export const getTasks = createAsyncThunk("tasks/getAll", async (filters, thunkAP
       url = `${url}?${queryParams.toString()}`
     }
 
-    console.log("Fetching tasks from:", url)
+    // console.log("Fetching tasks from:", url)
     const response = await authAxios.get(url)
-    console.log("API Response:", response.data)
+    // console.log("API Response:", response.data)
 
     // Ensure we always return an array
     const tasks = Array.isArray(response.data) ? response.data : []
@@ -51,7 +51,7 @@ export const getTasks = createAsyncThunk("tasks/getAll", async (filters, thunkAP
 
     return tasks
   } catch (error) {
-    console.error("Error fetching tasks:", error)
+    // console.error("Error fetching tasks:", error)
     const message =
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -67,7 +67,7 @@ export const getTaskById = createAsyncThunk("tasks/getById", async (id, thunkAPI
     const response = await authAxios.get(`/api/tasks/${id}`)
     return response.data
   } catch (error) {
-    console.error("Error fetching task by ID:", error)
+    // console.error("Error fetching task by ID:", error)
     const message =
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -102,15 +102,15 @@ export const createTask = createAsyncThunk("tasks/create", async (taskData, thun
       }
     }
 
-    console.log("Creating task with data:", {
-      title: taskData.title,
-      description: taskData.description,
-      status: taskData.status,
-      priority: taskData.priority,
-      dueDate: taskData.dueDate,
-      assignedTo: taskData.assignedTo,
-      documentsCount: taskData.documents ? taskData.documents.length : 0,
-    })
+    // console.log("Creating task with data:", {
+    //   title: taskData.title,
+    //   description: taskData.description,
+    //   status: taskData.status,
+    //   priority: taskData.priority,
+    //   dueDate: taskData.dueDate,
+    //   assignedTo: taskData.assignedTo,
+    //   documentsCount: taskData.documents ? taskData.documents.length : 0,
+    // })
 
     const response = await authAxios.post("/api/tasks", formData, {
       headers: {
@@ -118,7 +118,7 @@ export const createTask = createAsyncThunk("tasks/create", async (taskData, thun
       },
     })
 
-    console.log("Task created response:", response.data)
+    // console.log("Task created response:", response.data)
     return response.data
   } catch (error) {
     console.error("Error creating task:", error)
@@ -156,7 +156,7 @@ export const updateTask = createAsyncThunk("tasks/update", async ({ id, taskData
       }
     }
 
-    console.log("Updating task with ID:", id)
+    // console.log("Updating task with ID:", id)
     const response = await authAxios.put(`/api/tasks/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -166,7 +166,7 @@ export const updateTask = createAsyncThunk("tasks/update", async ({ id, taskData
     console.log("Task updated response:", response.data)
     return response.data
   } catch (error) {
-    console.error("Error updating task:", error)
+    // console.error("Error updating task:", error)
     const message =
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -180,10 +180,10 @@ export const deleteTask = createAsyncThunk("tasks/delete", async (id, thunkAPI) 
     const authAxios = createAuthAxios(token)
 
     await authAxios.delete(`/api/tasks/${id}`)
-    console.log("Task deleted with ID:", id)
+    // console.log("Task deleted with ID:", id)
     return id
   } catch (error) {
-    console.error("Error deleting task:", error)
+    // console.error("Error deleting task:", error)
     const message =
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -216,7 +216,7 @@ export const taskSlice = createSlice({
         state.isError = false
         // Ensure we always have an array
         state.tasks = Array.isArray(action.payload) ? action.payload : []
-        console.log("Tasks stored in Redux:", state.tasks.length)
+        // console.log("Tasks stored in Redux:", state.tasks.length)
       })
       .addCase(getTasks.rejected, (state, action) => {
         state.isLoading = false
@@ -252,7 +252,7 @@ export const taskSlice = createSlice({
         }
         // Add the new task to the beginning of the array
         state.tasks.unshift(action.payload)
-        console.log("Task added to Redux store. Total tasks:", state.tasks.length)
+        // console.log("Task added to Redux store. Total tasks:", state.tasks.length)
       })
       .addCase(createTask.rejected, (state, action) => {
         state.isLoading = false

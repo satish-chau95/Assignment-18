@@ -60,7 +60,7 @@ const getTasks = asyncHandler(async (req, res) => {
     // Executing query
     const tasks = await query
 
-    console.log(`Returning ${tasks.length} tasks for user ${req.user.id}`)
+    // console.log(`Returning ${tasks.length} tasks for user ${req.user.id}`)
 
     // Return tasks as a simple array
     res.status(200).json(tasks)
@@ -197,7 +197,7 @@ const updateTask = asyncHandler(async (req, res) => {
       select: "name email",
     })
 
-    console.log("Task updated:", task)
+    // console.log("Task updated:", task)
     res.status(200).json(task)
   } catch (error) {
     console.error("Error in updateTask:", error)
